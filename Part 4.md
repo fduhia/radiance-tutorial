@@ -263,10 +263,19 @@ First, the template. Simply wrapping the visibility div in an `<c:unless test="(
 This fixes almost everything. However, this only handles the case where we create a new annotation. On the edit page of an annotation, the `annotate` GET parameter is not set and the visibility options will appear again. Not what we want. A slight modification to the template argument should fix this though.
 
 ```common-lisp
-:parent (if id
-            (let ((parent (paste-parent paste)))
-              (when parent (dm:id parent)))
-            (get-var "annotate"))
+(define-page edit "plaster/edit(?:/(.*))?" (:uri-groups (id) :clip "edit.ctml")
+  (let ((paste (if id
+		   (ensure-paste id)
+		   (dm:hull 'plaster-pastes))))
+    (r-clip:process T
+		    :paste paste
+		    :parent (if id
+				(let ((parent (paste-parent paste)))
+				  (when parent (dm:id parent)))
+				(get-var "annotate"))
+		    :repaste (get-var "repaste")
+		    :error (get-var "error")
+		    :message (get-var "message"))))
 ```
 
 Not the prettiest way to do it, but it'll be fine for now.
