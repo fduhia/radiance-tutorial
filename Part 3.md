@@ -39,7 +39,7 @@ Should you ever encounter a situation where the automatic ordering is not doing 
 (define-page (raw 1000) ...)
 ```
 
-Finally we also want a lil' link to the raw view of the pastes, and we can achieve this with another `<a>` in the actions nav of our view template.
+Finally we also want a lil' link to the raw view of the pastes, and we can achieve this with another `<a>` in the actions nav of our `view` template.
 
 ```HTML
 <a href="#" @href="plaster/view/{0}/raw _id">Raw</a>
