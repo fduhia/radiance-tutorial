@@ -90,7 +90,7 @@ Not much has changed here aside from the access to the ID. For the view page, we
   (r-clip:process T :paste (ensure-paste id)))
 ```
 
-Ah! Much simpler. The template now only gets a single variable, namely our paste object. Luckily enough, Clip makes it convenient to extract the information anyway:
+Ah! Much simpler. The `view` template now only gets a single variable, namely our paste object. Luckily enough, Clip makes it convenient to extract the information anyway:
 
 ```HTML
 <!DOCTYPE html>
@@ -146,7 +146,7 @@ With a proper edit button in place, and data handling cleaned up, let's give the
     (r-clip:process T :paste paste)))
 ```
 
-Alright, that's simple enough. Now we just need to fix up the edit template like we did for the view.
+Alright, that's simple enough. Now we just need to fix up the `edit` template like we did for the view.
 
 ```HTML
 <!DOCTYPE html>
@@ -204,7 +204,7 @@ Assuming that you've already tried the pasting out before, if you visit [the pas
                       :error (get-var "error"))))
 ```
 
-All that's changed is that there's another Clip variable for the error message that's taken from the get parameter. The change to the edit template is also not big. Just add the following snippet somewhere appropriate outside the `<c:using>` tag.
+All that's changed is that there's another Clip variable for the error message that's taken from the get parameter. The change to the `edit` template is also not big. Just add the following snippet somewhere appropriate outside the `<c:using>` tag.
 
 ```HTML
 <c:when test="error">
