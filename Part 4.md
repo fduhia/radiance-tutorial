@@ -238,7 +238,7 @@ You should now be able to paste with the different visibilities being remembered
 
 When thinking about the view page, you might realise a bit of a pickle. Currently it's possible to also view annotations on their own, and they even have their own visibility. However, it is probably much more sensible for an annotation to inherit the visibility from its parent. The solution to this that I've opted for is to make the view page for an annotation redirect to the view page for its parent. The parent page can then handle the "authentication". At the same time, when creating an annotation the visibility selector and password field are hidden from the user, and the default visibility is set to unlisted. This'll require changes in a few places, but don't worry, it's not too big of an issue.
 
-First, the template. Simply wrapping the visibility div in an `<c:unless test="(** :parent)">` element should be sufficient, but showing the user that they're annotating would probably be nice too, so let's do that instead. 
+First, the `edit` template. Simply wrapping the visibility div in an `<c:unless test="(** :parent)">` element should be sufficient, but showing the user that they're annotating would probably be nice too, so let's do that instead. 
 
 ```HTML
 <c:if test="(** :parent)">
@@ -260,7 +260,7 @@ First, the template. Simply wrapping the visibility div in an `<c:unless test="(
 </c:if>
 ```
 
-This fixes almost everything. However, this only handles the case where we create a new annotation. On the edit page of an annotation, the `annotate` GET parameter is not set and the visibility options will appear again. Not what we want. A slight modification to the template argument should fix this though.
+This fixes almost everything. However, this only handles the case where we create a new annotation. On the `edit` page of an annotation, the `annotate` GET parameter is not set and the visibility options will appear again. Not what we want. A slight modification to the template argument should fix this though.
 
 ```common-lisp
 (define-page edit "plaster/edit(?:/(.*))?" (:uri-groups (id) :clip "edit.ctml")
@@ -476,13 +476,13 @@ Note the careful change in the edit page. We have to password protect against th
 
 While we're dealing with the user interface, another issue pops up though. Namely, currently the user has to type in the password again when getting to the edit page from theview page. Plus, the edit page does not prefill the previous password. This is all rather cumbersome, but we can fix it easily enough in the templates. They just need a new argument `:password` that is filled with the POST/GET variable from the view/edit pages.
 
-In the view template all the `@href`s need to be changed to supply the password in the query part. For the sake of brevity, I'll only paste one example of each here:
+In the `view` template all the `@href`s need to be changed to supply the password in the query part. For the sake of brevity, I'll only paste one example of each here:
 
 ```HTML
 <a href="#" @href="plaster/edit?annotate={0}&password={1} _id (** :password)">Annotate</a>
 ```
 
-The edit template needs its password field changed slightly, too.
+The `edit` template needs its password field changed slightly, too.
 
 ```HTML
 <input type="password" name="password" placeholder="password" lquery="(val (** :password))" />
