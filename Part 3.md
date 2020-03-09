@@ -199,7 +199,7 @@ In the view we must make sure to sort the annotations by their timestamp. Otherw
 
 We chose the GET variable name "annotate" for the `edit` page because it looks and sounds a bit more intuitive to use from a user perspective. Internally however, we use `parent` for everything as it describes the relationship a bit more usefully.
 
-Ok! With the code side of things settled first this time around, we'll need to go back and update our templates. Let's start with the boring one, namely the edit template. We just need an additional, hidden field for this, which we can stuff alongside the other elements in the actions nav.
+Ok! With the code side of things settled first this time around, we'll need to go back and update our templates. Let's start with the boring one, namely the `edit` template. We just need an additional, hidden field for this, which we can stuff alongside the other elements in the actions nav.
 
 ```HTML
 <input type="hidden" name="parent" lquery="(val (** :parent))" />
